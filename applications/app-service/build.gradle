@@ -1,0 +1,38 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+	implementation project( ':api-restjpa')
+	implementation project( ':jpa-repository')
+	implementation 'org.reactivecommons.utils:object-mapper:0.1.0'
+	implementation project( ':mongo-repository')
+	implementation project( ':api-rest')
+    implementation project(':model')
+    implementation project(':usecase')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    //implementation 'org.mongodb:mongodb-jdbc:2.0.0'
+    //implementation 'org.mongodb:mongo-java-driver:3.12.11'
+
+    //runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+}
+
+task explodedJar(type: Copy) {
+    with jar
+    into "${buildDir}/exploded"
+}
+
+jar {
+    // To disable the *-plain.jar
+    enabled = false
+}
+
+bootJar {
+    // Sets output jar name
+    archiveFileName = "${project.getParent().getName()}.${archiveExtension.get()}"
+}
+
+repositories {
+    mavenCentral()
+}

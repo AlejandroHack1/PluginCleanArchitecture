@@ -1,0 +1,33 @@
+version: '3.3'
+
+
+services:
+
+  postgres:
+    # Official Postgres image from DockerHub
+    image: 'postgres:13.2'
+    restart: always #restart policy
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+    ports:
+      - 5432:5432
+    networks:
+      - app_net
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: clean-architecture
+
+  adminer:
+    image: adminer
+    restart: always #restart policy
+    ports:
+      - 8900:8080
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
